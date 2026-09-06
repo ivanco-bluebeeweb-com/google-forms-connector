@@ -2,7 +2,7 @@
 from __future__ import annotations
 import json, uuid
 from imperal_sdk import ActionResult
-from google_forms_client import Google FormsClient
+from google_forms_client import GoogleFormsClient
 from app import chat
 from schemas import (
     NoParams,
@@ -48,7 +48,7 @@ async def resolve_connection(ctx, connection_id: str = "") -> dict | None:
 )
 async def connect_google_forms(params: ConnectParams, ctx) -> ActionResult[ConnectionRecord]:
     """Connect Google Forms Connector."""
-    client = Google FormsClient(api_key=params.api_key, base_url=params.base_url)
+    client = GoogleFormsClient(api_key=params.api_key, base_url=params.base_url)
     await client.verify_auth()
     conns = await _load_connections(ctx)
     cid = f"conn_{uuid.uuid4().hex[:8]}"

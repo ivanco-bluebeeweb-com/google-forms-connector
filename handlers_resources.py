@@ -3,7 +3,7 @@ from __future__ import annotations
 from app import chat
 import datetime
 from imperal_sdk import ActionResult
-from google_forms_client import Google FormsClient
+from google_forms_client import GoogleFormsClient
 from handlers_connection import resolve_connection
 from schemas import *
 
@@ -11,7 +11,7 @@ async def _get_client(ctx, cid: str = ""):
     conn = await resolve_connection(ctx, cid)
     if not conn:
         return None, ActionResult.error("No active Google Forms connection", code="UNAUTHORIZED")
-    return Google FormsClient(api_key=conn["api_key"], base_url=conn.get("base_url", "")), None
+    return GoogleFormsClient(api_key=conn["api_key"], base_url=conn.get("base_url", "")), None
 
 @chat.function(
     "list_subscribers",

@@ -5,7 +5,7 @@ from typing import Any, Optional
 
 DEFAULT_BASE = "https://api.google_forms.com"
 
-class Google FormsClient:
+class GoogleFormsClient:
     def __init__(self, api_key: str, base_url: str = ""):
         self.token = api_key
         self.base_url = (base_url.strip() if base_url else DEFAULT_BASE).rstrip("/")
