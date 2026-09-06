@@ -1,3 +1,30 @@
-# ConvertKit Connector - PREPARATION.md
+# Google Forms Connector — Preparation
 
-Standard documentation for ConvertKit Connector in Imperal Cloud.
+**Category:** C32. Survey & Feedback Management  
+**Vendor:** Google Forms (https://workspace.google.com/products/forms)  
+**Preparation Standard:** Imperal Cloud APP_PREPARATION_STANDARD.md  
+**Scope Decision:** Maximum vendor-specific capability matching official vendor APIs.
+
+## 1. Product Passport
+Google Forms предназначен для решения задач: автоматизация чтения форм Google Workspace, синхронизация ответов и программное управление тестами.
+Коннектор в Imperal Cloud предоставляет владельцу бизнеса и операторам единую панель интеграции, прозрачное управление ресурсами, аудит и сценарии автоматизации через ICNLI.
+
+## 2. Problem Statement
+Когда **[администратор Google Workspace]** сталкивается с необходимостью выполнять автоматизация чтения форм Google Workspace, синхронизация ответов и программное управление тестами, ей приходится вручную переключаться между сервисами, теряя контекст, время и контроль над ошибками.
+
+## 3. Users, Roles and Permissions
+- **Ключевые роли:** администратор Google Workspace, преподаватель, проектный менеджер.
+- **Разделение доступа:** Read-only просмотр списков и отчетов; административное управление подключениями и настройками; подтверждение критических изменений.
+
+## 4. Primary Scenario and Human Decision
+`Оператор настраивает подключение -> коннектор проверяет статус учетных данных -> авторизация через Google OAuth -> чтение метаданных формы -> сбор ответов респондентов в реальном времени -> результат фиксируется в аудите`.
+
+## 5. Value and Measurable Metrics
+- Сокращение времени на рутинные операции в 3-5 раз.
+- 100% прозрачность действий операторов через системные журналы.
+- Надежная изоляция секретов по стандарту BYOC.
+
+## 6. Boundaries and Anti-Goals
+- Коннектор не выполняет несанкционированных деструктивных операций без подтверждения.
+- Не хранит секреты в открытом виде (только Imperal Vault / Auth Gateway).
+- Не подменяет оригинальный веб-интерфейс вендора в нестандартных сценариях.
