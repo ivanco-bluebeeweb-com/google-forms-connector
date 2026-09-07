@@ -32,7 +32,7 @@ async def resolve_client(ctx, connection_id: str = "") -> GoogleFormsClient:
     effects=["create:connection"],
     data_model=ConnectionRecord
 )
-async def connect_google_forms(params: ConnectParams, ctx) -> ActionResult:
+async def connect_google_forms(ctx, params: ConnectParams) -> ActionResult:
     """Connect Google Forms account."""
     client = GoogleFormsClient(access_token=params.access_token, base_url=params.base_url)
     res = await client.verify_auth()
@@ -64,7 +64,7 @@ async def connect_google_forms(params: ConnectParams, ctx) -> ActionResult:
     effects=["read:connections"],
     data_model=ConnectionList
 )
-async def list_connections(params: NoParams, ctx) -> ActionResult:
+async def list_connections(ctx, params: NoParams) -> ActionResult:
     """List Google Forms connections."""
     connections = await ctx.store.get("connections", [])
     recs = [ConnectionRecord(**c) for c in connections]
@@ -79,7 +79,7 @@ async def list_connections(params: NoParams, ctx) -> ActionResult:
     effects=["delete:connection"],
     data_model=DeleteResult
 )
-async def disconnect_google_forms(params: ConnectionIdParams, ctx) -> ActionResult:
+async def disconnect_google_forms(ctx, params: ConnectionIdParams) -> ActionResult:
     """Disconnect Google Forms account."""
     connections = await ctx.store.get("connections", [])
     if not connections:

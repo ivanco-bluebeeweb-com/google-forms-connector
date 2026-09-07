@@ -20,7 +20,7 @@ from handlers_connection import resolve_client
     effects=["read:form"],
     data_model=FormRecord
 )
-async def get_form(params: GetFormParams, ctx) -> ActionResult:
+async def get_form(ctx, params: GetFormParams) -> ActionResult:
     """Get Google Form details."""
     try:
         client = await resolve_client(ctx, params.connection_id)
@@ -51,7 +51,7 @@ async def get_form(params: GetFormParams, ctx) -> ActionResult:
     effects=["read:responses"],
     data_model=ResponseList
 )
-async def list_responses(params: ListResponsesParams, ctx) -> ActionResult:
+async def list_responses(ctx, params: ListResponsesParams) -> ActionResult:
     """List Google Form responses."""
     try:
         client = await resolve_client(ctx, params.connection_id)
@@ -78,7 +78,7 @@ async def list_responses(params: ListResponsesParams, ctx) -> ActionResult:
     effects=["read:survey_health"],
     data_model=AuditHealthRecord
 )
-async def audit_survey_health(params: ConnectionIdParams, ctx) -> ActionResult:
+async def audit_survey_health(ctx, params: ConnectionIdParams) -> ActionResult:
     """Audit Google Forms health."""
     try:
         client = await resolve_client(ctx, params.connection_id)
