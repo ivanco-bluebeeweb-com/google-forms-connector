@@ -53,7 +53,7 @@ async def connect_google_forms(params: ConnectParams, ctx) -> ActionResult:
         c["is_active"] = False
     connections.append(record)
     await ctx.store.set("connections", connections)
-    return ActionResult.ok(ConnectionRecord(**record), summary=f"Connected Google Forms account '{record['label']}'.")
+    return ActionResult.success(ConnectionRecord(**record), summary=f"Connected Google Forms account '{record['label']}'.")
 
 @chat.function(
     "list_connections",
@@ -68,7 +68,7 @@ async def list_connections(params: NoParams, ctx) -> ActionResult:
     """List Google Forms connections."""
     connections = await ctx.store.get("connections", [])
     recs = [ConnectionRecord(**c) for c in connections]
-    return ActionResult.ok(ConnectionList(connections=recs, total=len(recs)), summary=f"Found {len(recs)} connection(s).")
+    return ActionResult.success(ConnectionList(connections=recs, total=len(recs)), summary=f"Found {len(recs)} connection(s).")
 
 @chat.function(
     "disconnect_google_forms",
@@ -91,4 +91,4 @@ async def disconnect_google_forms(params: ConnectionIdParams, ctx) -> ActionResu
     if new_conns and not any(c.get("is_active") for c in new_conns):
         new_conns[0]["is_active"] = True
     await ctx.store.set("connections", new_conns)
-    return ActionResult.ok(DeleteResult(success=True, message=f"Disconnected {target_id}"), summary=f"Disconnected {target_id}.")
+    return ActionResult.success(DeleteResult(success=True, message=f"Disconnected {target_id}"), summary=f"Disconnected {target_id}.")

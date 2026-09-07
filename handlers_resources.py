@@ -38,7 +38,7 @@ async def get_form(params: GetFormParams, ctx) -> ActionResult:
             revision_id=raw.get("revisionId"),
             raw=raw
         )
-        return ActionResult.ok(rec, summary=f"Retrieved form {params.form_id}: {info.title}")
+        return ActionResult.success(rec, summary=f"Retrieved form {params.form_id}: {info.title}")
     except Exception as e:
         return ActionResult.error(f"Error fetching Google Form: {e}")
 
@@ -65,7 +65,7 @@ async def list_responses(params: ListResponsesParams, ctx) -> ActionResult:
             )
             for r in items
         ]
-        return ActionResult.ok(ResponseList(responses=recs, total=len(recs)), summary=f"Found {len(recs)} response(s) for form {params.form_id}.")
+        return ActionResult.success(ResponseList(responses=recs, total=len(recs)), summary=f"Found {len(recs)} response(s) for form {params.form_id}.")
     except Exception as e:
         return ActionResult.error(f"Error fetching form responses: {e}")
 
@@ -90,6 +90,6 @@ async def audit_survey_health(params: ConnectionIdParams, ctx) -> ActionResult:
             message="Google Forms API connection verified." if is_ok else auth_check.get("error", "Unknown error"),
             details=auth_check
         )
-        return ActionResult.ok(rec, summary=f"Survey health: {rec.status}")
+        return ActionResult.success(rec, summary=f"Survey health: {rec.status}")
     except Exception as e:
         return ActionResult.error(f"Error auditing survey health: {e}")
