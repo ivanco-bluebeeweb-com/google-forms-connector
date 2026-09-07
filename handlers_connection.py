@@ -8,7 +8,7 @@ from schemas import NoParams, ConnectParams, ConnectionIdParams, ConnectionRecor
 from google_forms_client import GoogleFormsClient
 
 async def resolve_client(ctx, connection_id: str = "") -> GoogleFormsClient:
-    connections = await ctx.store.get("connections", [])
+    connections = (await ctx.store.get("connections", [])) or []
     if not connections:
         raise ValueError("No Google Forms connections configured. Use connect_google_forms first.")
     conn = None
@@ -39,7 +39,7 @@ async def connect_google_forms(ctx, params: ConnectParams) -> ActionResult:
     if res.get("status") == "error":
         return ActionResult.error(f"Failed to authenticate with Google Forms: {res.get('error')}")
 
-    connections = await ctx.store.get("connections", [])
+    connections = (await ctx.store.get("connections", [])) or []
     masked = params.access_token[:6] + "..." if len(params.access_token) > 6 else "***"
     record = {
         "id": f"conn_{uuid.uuid4().hex[:8]}",
@@ -66,7 +66,7 @@ async def connect_google_forms(ctx, params: ConnectParams) -> ActionResult:
 )
 async def list_connections(ctx, params: NoParams) -> ActionResult:
     """List Google Forms connections."""
-    connections = await ctx.store.get("connections", [])
+    connections = (await ctx.store.get("connections", [])) or []
     recs = [ConnectionRecord(**c) for c in connections]
     return ActionResult.success(ConnectionList(connections=recs, total=len(recs)), summary=f"Found {len(recs)} connection(s).")
 
@@ -81,7 +81,7 @@ async def list_connections(ctx, params: NoParams) -> ActionResult:
 )
 async def disconnect_google_forms(ctx, params: ConnectionIdParams) -> ActionResult:
     """Disconnect Google Forms account."""
-    connections = await ctx.store.get("connections", [])
+    connections = (await ctx.store.get("connections", [])) or []
     if not connections:
         return ActionResult.error("No connections to remove.")
     target_id = params.connection_id or connections[0]["id"]
